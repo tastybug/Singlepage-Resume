@@ -92,3 +92,4 @@ sympy-plots-for-*.tex/
 *.xdy
 
 .idea
+*.code-workspace

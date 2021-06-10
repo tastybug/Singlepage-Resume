@@ -159,14 +159,17 @@ Jenkins \textbullet{} Teamcity \textbullet{} Jira \textbullet{} Trello
 \section{Recent Projects}
 
 \runsubsection{eBay}
-\descript{| Staff Engineer Backend }
+\descript{| Staff Engineer Backend, FTE }
 \location{ June 2018 - April 2021 | Dreilinden, DE}
 \vspace{\topsep} % Hacky fix for awkward extra vertical space
 \begin{tightemize}
-\item Green field development of a multi-tenant, central vertical in the automotive space ("MoVe - Motors Vertical")
-\item Integration of market-leading horizontal classifieds like \href{https://www.kijiji.ca}{\custombold{Kijiji Canada}}, \href{https://www.gumtree.com.au}{\custombold{Gumtree Australia}}, \href{https://www.gumtree.co.uk}{\custombold{Gumtree UK}}
-\item Setup of a Kafka streams based multi tenant data pipeline processing millions of records per day
-\item Migration of on-premise Kafka infrastructure onto GCP
+\item Green field development of a multi-tenant, centralized vertical in the automotive space ("MoVe - Motors Vertical")
+\item Integration of market-leading horizontal classifieds platforms like \href{https://www.kijiji.ca}{\custombold{Kijiji Canada}}, \href{https://www.gumtree.com.au}{\custombold{Gumtree Australia}}, \href{https://www.gumtree.co.uk}{\custombold{Gumtree UK}}
+\item Event driven architecture, based on a Kafka Streams data pipeline
+\item Achieved high degree of elasticity to cover resource demand of a platform spanning multiple continents, fulfilling the demand of local business hour load peaks in a cost efficient manner
+\item Zero downtime migration of an on-premise Kafka infrastructure processing millions of records per day onto GCP
+\item Fostering a culture of observability across the platform
+\item Collaboration with external development vendors in different time zones
 \item Redesign of an inherited legacy domain model using DDD techniques
 \end{tightemize}
 \sectionsep
