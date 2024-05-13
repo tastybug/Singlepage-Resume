@@ -1,225 +1,81 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Deedy - One Page Two Column Resume
-% LaTeX Template
-% Version 1.1 (30/4/2014)
-%
-% Original author:
-% Debarghya Das (http://debarghyadas.com)
-%
-% Original repository:
-% https://github.com/deedydas/Deedy-Resume
-%
-% IMPORTANT: THIS TEMPLATE NEEDS TO BE COMPILED WITH XeLaTeX
-%
-% This template uses several fonts not included with Windows/Linux by
-% default. If you get compilation errors saying a font is missing, find the line
-% on which the font is used and either change it to a font included with your
-% operating system or comment the line out to use the default font.
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 
-% TODO:
-% 1. Integrate biber/bibtex for article citation under publications.
-% 2. Figure out a smoother way for the document to flow onto the next page.
-% 3. Add styling information for a "Projects/Hacks" section.
-% 4. Add location/address information
-% 5. Merge OpenFont and MacFonts as a single sty with options.
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% CHANGELOG:
-% v1.1:
-% 1. Fixed several compilation bugs with \renewcommand
-% 2. Got Open-source fonts (Windows/Linux support)
-% 3. Added Last Updated
-% 4. Move Title styling into .sty
-% 5. Commented .sty file.
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% Known Issues:
-% 1. Overflows onto second page if any column's contents are more than the
-% vertical limit
-% 2. Hacky space on the first bullet point on the second column.
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\documentclass[]{resume}
-
-
-\begin{document}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%     LAST UPDATED DATE
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\lastupdated 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%     TITLE NAME
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\namesection{Philipp}{Bartsch}{ \urlstyle{same} \href{mailto:social@tastybug.com}{social@tastybug.com} | 
-LinkedIn://  \href{https://www.linkedin.com/in/tastybug}{\custombold{tastybug}} |  
-Github:// \href{https://github.com/tastybug}{\custombold{tastybug}} \\
+% Intro Options
+\ProvidesClass{deedy-resume-openfont}[2014/04/30 CV class]
+\NeedsTeXFormat{LaTeX2e}
+\DeclareOption{print}{\def\@cv@print{}}
+\DeclareOption*{%
+  \PassOptionsToClass{\CurrentOption}{article}
 }
+\ProcessOptions\relax
+\LoadClass{article}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%     COLUMN ONE
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Package Imports
+\usepackage[hmargin=1.25cm, vmargin=0.7cm]{geometry}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage[absolute]{textpos}
+\usepackage[UKenglish]{babel}
+\usepackage[UKenglish]{isodate}
+\usepackage{fontspec,xltxtra,xunicode}
 
-\begin{minipage}[t]{0.32\textwidth} 
+% Color definitions
+\definecolor{date}{HTML}{666666} 
+\definecolor{primary}{HTML}{2b2b2b} 
+\definecolor{headings}{HTML}{6A6A6A}
+\definecolor{subheadings}{HTML}{333333}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%     EDUCATION
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set main fonts
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont[Color=primary, Path = fonts/lato/]{Lato-Lig}
+\setsansfont[Scale=MatchLowercase,Mapping=tex-text, Path = fonts/raleway/]{Raleway-ExtraLight}
+\newcommand{\custombold}[1]{\color{subheadings}\fontspec[Path = fonts/lato/]{Lato-Reg}\selectfont #1 \normalfont}
 
-\section{Education} 
+% Date command
+\def\mydate{\leavevmode\hbox{\the\year-\twodigits\month-\twodigits\day}}
+\def\twodigits#1{\ifnum#1<10 0\fi\the#1}
+\setlength{\TPHorizModule}{1mm}
+\setlength{\TPVertModule}{1mm}
+\textblockorigin{0mm}{5mm} % start everyth
+\newcommand{\lastupdated}{\begin{textblock}{60}(165,0)
+\color{date}\fontspec[Path = fonts/raleway/]{Raleway-ExtraLight}\fontsize{8pt}{10pt}\selectfont 
+\href{http://tastybug.github.io/latest-resume/philipp-bartsch-resume.pdf}{Last Updated on \mydate{}}
+\end{textblock}}
 
-\subsection{Business Computing (B.Sc.)} 
-\descript{HTW Berlin - University of Applied Sciences; 2008 - 2011}
-\location{ GPA: 3.3 / 4.0 }
-\location{ German grade: 1.78 }
-\sectionsep
+% Name command
+\newcommand{\namesection}[3]{
+	\centering{
+		\sffamily
+		\fontspec[Path = fonts/lato/]{Lato-Hai}\fontsize{40pt}{10cm}\selectfont #1 
+		\fontspec[Path = fonts/lato/]{Lato-Lig}\selectfont #2
+	} \\
+	\vspace{5pt}
+	\centering{ \color{headings}\fontspec[Path = fonts/raleway/]{Raleway-Medium}\fontsize{11pt}{14pt}\selectfont #3}
+	\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+	\vspace{-15pt}
+}
+\titlespacing{\section}{0pt}{0pt}{0pt}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%     LINKS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Headings command
+\titleformat{\section}{\color{headings}
+\scshape\fontspec[Path = fonts/lato/]{Lato-Lig}\fontsize{16pt}{24pt}\selectfont \raggedright\uppercase}{} {0em}{}
 
-\section{Links} 
-Github:// \href{https://github.com/tastybug}{\custombold{tastybug}} \\
-LinkedIn://  \href{https://www.linkedin.com/in/tastybug}{\custombold{tastybug}}
-\sectionsep
+% Subeadings command
+\titleformat{\subsection}{\color{subheadings}
+\fontspec[Path = fonts/lato/]{Lato-Bol}\fontsize{12pt}{12pt}\selectfont\bfseries\uppercase}{}{0em}{}
+\titlespacing{\subsection}{0pt}{\parskip}{-\parskip}
+\titlespacing{\subsubsection}{0pt}{\parskip}{-\parskip}
+\newcommand{\runsubsection}[1]{\color{subheadings}
+\fontspec[Path = fonts/lato/]{Lato-Bol}\fontsize{12pt}{12pt}\selectfont\bfseries\uppercase {#1} \normalfont}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%     Expertise
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Descriptors command
+\newcommand{\descript}[1]{\color{subheadings}\raggedright\scshape\fontspec[Path = fonts/raleway/]{Raleway-Medium}\fontsize{11pt}{13pt}\selectfont {#1 \\} \normalfont}
 
-\section{Expertise}
-\subsection{Development}
-Full Stack Development \\
-Android Development \\
-\sectionsep
+% Location command
+\newcommand{\location}[1]{\color{headings}\raggedright\fontspec[Path = fonts/raleway/]{Raleway-Medium}\fontsize{10pt}{12pt}\selectfont {#1\\} \normalfont}
 
-\subsection{CI / CD / Testing}
-Test Automation \\
-Testing Strategies \\
-Build Automation \\
-Continuous Deployment \\
-Continuous Integration \\
-\sectionsep
+% Section seperators command
+\newcommand{\sectionsep}[0]{\vspace{8pt}}
 
-\subsection{methodology}
-Clean Code Advocate \\
-Domain Driven Design \\
-Fast Feedback Loops \\
-Mentoring and Pairing \\
-Lean / Agile Approach \\
-\sectionsep
+% Bullet Lists with fewer gaps command
+\newenvironment{tightemize}{\vspace{-\topsep}\begin{itemize}\itemsep1pt \parskip0pt \parsep0pt}{\end{itemize}\vspace{-\topsep}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%     SKILLS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Toolbox}
-\location{Main Languages}
-Java (JVM\&Android) \textbullet{} Groovy \textbullet{} Python \textbullet{} Golang \textbullet{} Typescript \textbullet{} SQL-92+\\
-\location{Infrastructure}
-VM Based w/ Puppet \textbullet{} Kubernetes on GCP \textbullet{} Docker \textbullet{} Keycloak \textbullet{} Android\\
-\location{Middleware, Frameworks, DBs}
-Spring / Boot \textbullet{} Vertx \textbullet{} Elasticsearch \textbullet{} Kafka \textbullet{} Kafka Streams \textbullet{} MongoDB \textbullet{} Oracle RDBMS \textbullet{} MySQL\\
-\location{Testing}
-Spock \textbullet{} Selenium \textbullet{} Mockito \textbullet{} JMeter\\
-\location{Tools}
-Jenkins \textbullet{} Teamcity \textbullet{} Jira \textbullet{} Trello
-\textbullet{} Uservoice \textbullet{} Git \textbullet{} Subversion  \textbullet{} Grafana \textbullet{} Prometheus \textbullet{} Maven 
-\textbullet{} Gradle \\
-\sectionsep
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%     COLUMN TWO
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\end{minipage} 
-\hfill
-\begin{minipage}[t]{0.64\textwidth} 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%     RECENT PROJECTS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Recent Projects}
-
-\runsubsection{eBay}
-\descript{| Staff Engineer Backend, FTE }
-\location{ June 2018 - April 2021 | Dreilinden, DE}
-\vspace{\topsep} % Hacky fix for awkward extra vertical space
-\begin{tightemize}
-\item Green field development of a multi-tenant, centralized vertical in the automotive space ("MoVe - Motors Vertical")
-\item Integration of market-leading horizontal classifieds platforms like \href{https://www.kijiji.ca}{\custombold{Kijiji Canada}}, \href{https://www.gumtree.com.au}{\custombold{Gumtree Australia}}, \href{https://www.gumtree.co.uk}{\custombold{Gumtree UK}}
-\item Event driven architecture, based on a Kafka Streams data pipeline
-\item Achieved high degree of elasticity to cover resource demand of a platform spanning multiple continents, fulfilling the demand of local business hour load peaks in a cost efficient manner
-\item Zero downtime migration of an on-premise Kafka infrastructure processing millions of records per day onto GCP
-\item Fostering a culture of observability across the platform
-\item Collaboration with external development vendors in different time zones
-\item Redesign of an inherited legacy domain model using DDD techniques
-\end{tightemize}
-\sectionsep
-
-\runsubsection{Deutsche Post AG}
-\descript{| Senior Software Engineer, Freelance }
-\location{January 2014  – June 2018 | Berlin, DE}
-\begin{tightemize}
-\item Shaping a massive microservice platform, serving millions of customers.
-\item Migration of critical path legacy monoliths into scalable microservices.
-\item Greenfield development of full stack microservices using various techstacks.
-\item Increased release frequency with improvements to the release process.
-\item Introduction of Domain Driven Design into the development process.
-\item Introduction of robust test automation allowing for Continuous Deployment.
-\item Advocacy of systematic knowledge sharing using various techniques like mentoring, pairing, mob programming and DDD`s ubiquitous language.
-\end{tightemize}
-\sectionsep
-
-\runsubsection{EarlyNerds}
-\descript{| Co-Founder, Android Developer }
-\location{March 2013  – February 2016 | Berlin, DE}
-\begin{tightemize}
-\item Creation and distribution of a productivity tool for teachers that achieved leadership by market share on Windows, top 3 spot by market share on Android in Germany in our niche within 12 months
-\item Lean development of Android \& Windows Mobile apps, self distributed.
-\end{tightemize}
-\sectionsep
-
-\runsubsection{Elego GmbH \& others}
-\descript{| CD/CI Consultant, Freelance }
-\location{October 2011  – November 2013 | Europe}
-\sectionsep
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%     SIDE PROJECTS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Side Projects}
-
-\runsubsection{Open Source Android App Development}
-\descript{| Pocket Log}
-\location{November 2015 – Present }
-Creator and maintainer of a native Android app that offers revision-safe time tracking for Contractors and Freelancers, see \href{https://github.com/tastybug/timetracker}{\custombold{Github}} and \href{https://play.google.com/store/apps/details?id=com.tastybug.timetracker}{\custombold{App Store Presence}}
-\sectionsep
-
-\runsubsection{Plugin-Maintainer / Open Source Dev}
-\descript{| Jenkins Project}
-\location{2012 – 2015 }
-Maintainer of the Jenkins libvirt slave plugin, see \href{https://wiki.jenkins.io/display/JENKINS/Libvirt+Slaves+Plugin}{\custombold{Plugin Landing Page}}
-\sectionsep
-
-\end{minipage} 
-\end{document}
